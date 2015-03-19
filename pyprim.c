@@ -1,123 +1,142 @@
 #include <stdio.h>
 #include <math.h>
 
+char *rs(size_t length);
+
 int count = 1;
-int used[214748364];
-int s;
-int t;
 
-int amin;
-int amax;
+int fa;
+int fb;
+int fc;
 
-int bmin;
-int bmax;
+int a1[3] = {1,-2,2};
+int a2[3] = {2,-1,2};
+int a3[3] = {2,-2,3};
 
-int cmin;
-int cmax;
+int b1[3] = {1,2,2};
+int b2[3] = {2,1,2};
+int b3[3] = {2,2,3};
 
-bool isPrimitive(int x, int y, int z);
-int euclid(int n, int p);
-int myPow(int f, int g);
+int c1[3] = {-1,2,2};
+int c2[3] = {-2,1,2};
+int c3[3] = {-2,2,3};
+
+int current[100000000];
+
+int count1 = 1;
+int count2 = 2;
+int count3 = 3;
+
+int data = 3;
+
+int ax;
+int ay;
+int az;
+
+int bx;
+int by;
+int bz;
+
+int cx;
+int cy;
+int cz;
+
+int p;
+
+int x = 3;
+int y = 4;
+int z = 5;
+
+int counter = 1;
+
+int num;
+int l;
 
 int main()
 {
-	printf("Primitive Pythagorean Triple Generator Version 2\n");
+	printf("Primitive Pythagorean Triple Tree-Style Generator Version 1\n");
 	printf("------------------------------------------------\n");
-	printf("Copyright (C) 2015, Christo Keller\n\n");
+	printf("Copyright (C) 2015, Christo Keller\n\n");	
 
-	printf("Minimum A Value: ");
-	scanf("%d", &amin);
+	FILE *f = fopen("triples.txt", "w");
+	fprintf(f,"Primitive Pythagorean Triple Tree-Style Generator Version 1\n");
+	fprintf(f,"------------------------------------------------\n");
+	fprintf(f,"Copyright (C) 2015, Christo Keller\n\n");	
 
-	printf("Maximum A Value: ");
-	scanf("%d", &amax);
+	printf("First A Value: ");
+	scanf("%d", &fa);
+	current[1] = fa;
+	fprintf(f, "First A Value: %d\n", fa);
 
-	printf("Minimum B Value: ");
-	scanf("%d", &bmin);
+	printf("First B Value: ");
+	scanf("%d", &fb);
+	current[2] = fb;
+	fprintf(f, "First B Value: %d\n", fb);
 
-	printf("Maximum B Value: ");
-	scanf("%d", &bmax);
+	printf("First C Value: ");
+	scanf("%d", &fc);
+	current[3] = fc;
+	fprintf(f, "First C Value: %d\n", fc);
 
-	printf("Minimum C Value: ");
-	scanf("%d", &cmin);
-
-	printf("Maximum C Value: ");
-	scanf("%d", &cmax);
+	printf("Number of Triples to Generate: ");
+	scanf("%d", &num);
+	fprintf(f, "Number of Triples to Generate: %d\n\n", num);
 
 	// ---
 
-	for(int a = amin; a < amax; a++)
+	for(l=1; l<=num/3; l++)
 	{
-		for(int b = bmin; b < bmax; b++)
-		{
-			for(int c = cmin; c < cmax; c++)
-			{
-				int pa = a*a;
-				int pb = b*b;
-				int pc = c*c;
-
-				if((pa+pb)==pc)
-				{
-					if(isPrimitive(a, b, c))
-					{
-						if(t != 1)
-						{
-							int power = log10(b);
-							s = a*myPow(10,power+1)+b;
-							power = log10(a);
-							t = b*myPow(10,power+1)+a;
-							
-							if(used[s]!=1&&used[t]!=1)
-							{
-								if(count<10){printf("00%d:   A=%d, B=%d, C=%d\n", count, a, b, c);}
-								else if(count>=100){printf("%d: A=%d, B=%d, C=%d\n", count, a, b, c);}
-								else{printf("0%d:   A=%d, B=%d, C=%d\n", count, a, b, c);}
-								used[s]=1;
-								used[t]=1;
-								count++;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-bool isPrimitive(int x, int y, int z)
-{
-	if(euclid(x, y)==1&&euclid(x,z)==1&&euclid(y,z)==1)
-	{
-		return true;
-	}
-}
-
-int euclid(int n, int p)
-{
-	a:
+		x = current[count1];
+		y = current[count2];
+		z = current[count3];
+		
+		p = data+1;		
 	
-	if(p==0)
-	{
-		return n;
-	}
+		ax = (a1[0]*x)+(a1[1]*y)+(a1[2]*z);
+		ay = (a2[0]*x)+(a2[1]*y)+(a2[2]*z);
+		az = (a3[0]*x)+(a3[1]*y)+(a3[2]*z);
 
-	if(n>p)
-	{
-		n=n-p;
-		goto a;
+		bx = (b1[0]*x)+(b1[1]*y)+(b1[2]*z);
+		by = (b2[0]*x)+(b2[1]*y)+(b2[2]*z);
+		bz = (b3[0]*x)+(b3[1]*y)+(b3[2]*z);
+
+		cx = (c1[0]*x)+(c1[1]*y)+(c1[2]*z);
+		cy = (c2[0]*x)+(c2[1]*y)+(c2[2]*z);
+		cz = (c3[0]*x)+(c3[1]*y)+(c3[2]*z);
+
+		current[p] = ax;
+		current[p+1] = ay;
+		current[p+2] = az;
+
+		current[p+3] = bx;
+		current[p+4] = by;
+		current[p+5] = bz;
+
+		current[p+6] = cx;
+		current[p+7] = cy;		
+		current[p+8] = cz;
+		
+		count1 = count1+3;
+		count2 = count2+3;
+		count3 = count3+3;
+		
+		data = data+9;
+
+		printf("%d:   A=%d, B=%d, C=%d\n", counter, x, ay, az);
+		fprintf(f, "%d:   A=%d, B=%d, C=%d\n", counter, x, ay, az);
+		counter++;
+
+		printf("%d:   A=%d, B=%d, C=%d\n", counter, bx, by, bz);
+		fprintf(f, "%d:   A=%d, B=%d, C=%d\n", counter, bx, by, bz);
+		counter++;		
+
+		printf("%d:   A=%d, B=%d, C=%d\n", counter, cx, cy, cz);
+		fprintf(f,"%d:   A=%d, B=%d, C=%d\n", counter, cx, cy, cz);
+		counter++;
 	}
-	else
-	{
-		p=p-n;
-		goto a;
-	}	
+	printf("Finished!");
+	fprintf(f,"Finished!");
+	fclose(f);
 }
 
-int myPow(int f, int g)
-{
-     if (g == 0) return 1;
-     if (g == 1) return f;
 
-     int tmp = myPow(f, g/2);
-     if (g%2 == 0) return tmp * tmp;
-     else return f * tmp * tmp;
-}
